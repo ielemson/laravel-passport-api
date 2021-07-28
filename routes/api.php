@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::group(['prefix' => 'v1', 'middleware' => 'CORS'], function ($router) {
 
@@ -30,17 +27,14 @@ Route::post('/forgot','ForgotController@forgot');
 Route::post('/reset','ForgotController@reset'); 
 
 Route::middleware('auth:api')->group(function () {
+
     Route::get('/user', 'AuthController@user');
     Route::post('/logout', 'AuthController@logout');
+
+    Route::apiResource('products', 'ProductController');
     });
 
+    // Rout::apiResource("/product","ProductController");
+
     });
 
-
-
-    // Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
-    //     Route::post('/register', [UserController::class, 'register'])->name('register.user');
-    //     Route::post('/login', [UserController::class, 'login'])->name('login.user');
-    //     Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
-    //     Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
-    //     });
