@@ -29,6 +29,7 @@ Route::post('/reset','ForgotController@reset');
 Route::middleware('auth:api')->group(function () {
 
     Route::get('/user', 'AuthController@user');
+    Route::get('/users', 'AuthController@users');
     Route::post('/logout', 'AuthController@logout');
 
     Route::apiResource('products', 'ProductController');

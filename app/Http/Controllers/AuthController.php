@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Resources\User as UserResource;
-
+use App\Http\Resources\UserResource as UserResource;
+use Illuminate\Spport\Facades\Carbon;
 class AuthController extends Controller
 {
     
+
+    public function users(){
+
+        return UserResource::collection(\App\User::all());
+        
+    }
 public function login(Request $request){
 
     $validator = \Validator::make($request->all(), [
