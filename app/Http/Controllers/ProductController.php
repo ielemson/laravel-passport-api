@@ -19,15 +19,6 @@ class ProductController extends Controller
         return ProductResource::collection(Product::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -67,6 +58,7 @@ class ProductController extends Controller
         ]);
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -78,16 +70,7 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
+ 
 
     /**
      * Update the specified resource in storage.
@@ -98,7 +81,33 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+    		'price' => 'required',
+    		'category' => 'required',
+        ],
+
+        [
+            'name.required'=>'product name is required',
+            'price.required'=>'product price is required',
+            'category.required'=>'product category is required'
+        ]
+    
+    
+    );
+
+    if ($validator->fails()){
+
+        return response(['errors'=>$validator->errors()->all()], 422);
+
+        }
+       
+        $product->update($request->all());
+
+        return response([
+            'message'=>'Updated',
+            'data'=> new ProductResource($product)
+        ], 200);
     }
 
     /**
@@ -109,6 +118,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response([
+            "message"=>'Product Deleted'
+        ],200);
     }
 }
