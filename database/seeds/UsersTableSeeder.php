@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
         factory(\App\User::class,5)->create()
         ->each(
             function($user){
-                $user->role()->save(factory(App\Role::class)->make());
+                $user->role()->save(factory(\App\Role::class)->make());
             }
         );
     }
